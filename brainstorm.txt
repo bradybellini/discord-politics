@@ -4,6 +4,9 @@ PBS
 AP News
 Reuters
 
+
+sudo docker run -it -d --restart always --name bot_running bbellini/discord-political-bot
+
 Add some sort of fact checking find an api that could do it 
 https://toolbox.google.com/factcheck/explorer
 use for fact checking, jut add query to the link and point to it
