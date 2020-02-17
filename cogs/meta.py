@@ -26,7 +26,7 @@ class Meta(commands.Cog, name="meta"):
 
     @commands.command(hidden=True)
     async def support(self, ctx):
-        await ctx.send('coming soon tm')
+        await ctx.send('coming soon')
 
     @ping.error
     async def ping_error(self, ctx, error):

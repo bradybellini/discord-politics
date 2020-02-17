@@ -1,7 +1,7 @@
 import httpx
 import urllib
 import asyncio
-from data_parser import primary_avg
+from scripts.data_parser import primary_avg
 from datetime import datetime
 from pytz import timezone
 
