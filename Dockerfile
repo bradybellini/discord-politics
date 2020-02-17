@@ -3,4 +3,4 @@ WORKDIR /home/discord/bots/discord-politics
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 COPY . .
-CMD ["python", "bot.py"]
+CMD ["python3", "bot.py"]
