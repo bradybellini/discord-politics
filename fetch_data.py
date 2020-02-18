@@ -1,6 +1,8 @@
 import httpx
 import urllib
 import asyncio
+import pandas as pd
+from pandas import read_csv
 from scripts.data_parser import primary_avg
 from datetime import datetime
 from pytz import timezone
@@ -13,9 +15,16 @@ from pytz import timezone
 PRIMARY_POLLS_LAST_UPDATE = None
 PRIMARY_POLLS_AVG_LAST_UPDATE = None
 
+STATES = set()
+
+get_state = pd.read_csv(
+    'data/primary_average/president_primary_polls_avg.csv', encoding='ANSI')
+
+for i in get_state.state:
+    STATES.add(i)
 
 async def driver():
-    await asyncio.gather(fivethirtyeight_primary_polls(), fivethirtyeight_primary_polls_avg())
+    await asyncio.gather(fivethirtyeight_primary_polls_avg())
 
 
 def get_est_time():
@@ -24,7 +33,7 @@ def get_est_time():
     est_raw = datetime.now(eastern)
     return est_raw.strftime(fmt)
 
-
+# not currently using this data
 async def fivethirtyeight_primary_polls():
     url = 'https://projects.fivethirtyeight.com/polls-page/president_primary_polls.csv'
     headers = {'user-agent': 'Elections 2020 discord bot',
@@ -63,7 +72,9 @@ async def fivethirtyeight_primary_polls_avg():
                 f.write(primary_polls_avg.read().decode())
             PRIMARY_POLLS_AVG_LAST_UPDATE = get_est_time()
             # await asyncio.sleep(15)
-            # await primary_avg()
+            for state in STATES:
+                await primary_avg(state)
+
         else:
             pass
 
@@ -73,6 +84,7 @@ async def fivethirtyeight_primary_polls_avg():
         print(r.status_code, 'avg')
         print(PRIMARY_POLLS_AVG_LAST_UPDATE)
         await asyncio.sleep(900)
+
 
 
 if __name__ == "__main__":
