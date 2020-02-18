@@ -63,6 +63,10 @@ async def primary_avg(state):
              fontsize=8, transform=fig.transFigure)
     ax1.text(0.45, 0, f'Data Source: FiveThirtyEight',
              fontsize=8, transform=fig.transFigure)
+    ax1.text(0.9, .0, f'Elections 2020#4050',
+             fontsize=9, transform=fig.transFigure)
+
+
 
     sanders_converted_dates = mdates.datestr2num(sanders.modeldate.iloc[:50])
     warren_converted_dates = mdates.datestr2num(warren.modeldate.iloc[:50])
@@ -155,8 +159,8 @@ async def primary_avg(state):
     plt.close(fig=fig)
 
 if __name__ == "__main__":
-    for state in STATES:
-        asyncio.run(primary_avg(state))
+    # for state in STATES:
+    asyncio.run(primary_avg('National'))
     # asyncio.run(primary_avg("Wyoming"))
 
     # may be useful later "Wyoming"
