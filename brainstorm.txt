@@ -3,7 +3,7 @@ Dont want too many bc
 PBS
 AP News
 Reuters
-
+https://discordapp.com/api/oauth2/authorize?client_id=676974130075271188&permissions=873196625&scope=bot
 
 sudo docker run -it -d --restart always --name bot_running bbellini/discord-political-bot
 
@@ -85,3 +85,19 @@ Kentucky
 Idaho
 Michigan
 Mississippi
+
+[Unit]
+Description=MARVIN discord bot
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=discord
+WorkingDirectory=/home/discord/bots/marvin/
+ExecStart=/usr/bin/python3.8 /home/discord/bots/marvin/bot.py
+
+[Install]
+WantedBy=multi-user.target
