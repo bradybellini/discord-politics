@@ -1,5 +1,4 @@
 import httpx
-import urllib
 import asyncio
 import pandas as pd
 from pandas import read_csv
@@ -90,10 +89,10 @@ async def fivethirtyeight_primary_polls_avg():
             PRIMARY_POLLS_AVG_LAST_UPDATE = await get_est_time()
             # a little sleep to make sure everthing propagates? its just like a safety net to make sure everthing is good before
             # rendering all of the graphs
-            # await asyncio.sleep(15)
+            await asyncio.sleep(15)
             # creates all of the graphs from the data downloaded. gets states from global.
-            # for state in STATES:
-            #     await primary_avg(state)
+            for state in STATES:
+                await primary_avg(state)
         # if something besides 304 or 200 happen sends a message to a webhook in discord letting me know @TODO
         elif r.status_code != 304:
             # put webhook here
