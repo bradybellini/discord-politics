@@ -15,7 +15,7 @@ from pandas import DataFrame, read_csv
 STATES = set()
 
 get_state = pd.read_csv(
-    'data/primary_average/president_primary_polls_avg.csv', encoding='ANSI')
+    'data/primary_average/president_primary_polls_avg.csv', encoding='UTF-8')
 
 for i in get_state.state:
     STATES.add(i)
@@ -27,7 +27,7 @@ async def driver():
     pass
 
 
-def get_est_time():
+async def get_est_time():
     fmt = '%m/%d/%Y %H:%M %Z'
     eastern = timezone('US/Eastern')
     est_raw = datetime.now(eastern)
@@ -59,7 +59,7 @@ async def primary_avg(state):
     fig = plt.figure()
     ax1 = plt.subplot2grid((1, 1), (0, 0))
 
-    ax1.text(0.13, 0, f'Updated: {get_est_time()}',
+    ax1.text(0.13, 0, f'Updated: {await get_est_time()}',
              fontsize=8, transform=fig.transFigure)
     ax1.text(0.45, 0, f'Data Source: FiveThirtyEight',
              fontsize=8, transform=fig.transFigure)
