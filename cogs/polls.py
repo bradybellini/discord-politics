@@ -17,7 +17,7 @@ class Polls(commands.Cog, name='Poll related commands'):
             colour=0xfdfdfd, description="[] = required argument \n<> = optional argument ",)
         embed.set_author(name="Available Polls and Commands")
         embed.add_field(
-            name="Democratic Primary", value=f"`p.polls [primary|demprimary|democraticprimary] [state]`", inline=False)
+            name="**Democratic Primary**", value=f"`p.polls [primary|demprimary|democraticprimary] [state]`", inline=False)
         embed.timestamp = datetime.utcnow()
         embed.set_footer(
             text="Elections 2020", icon_url=f'{self.client.user.avatar_url}')
