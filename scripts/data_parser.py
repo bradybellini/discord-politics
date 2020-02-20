@@ -11,20 +11,10 @@ from pandas import DataFrame, read_csv
 # @TODO find a way to see when new polls have been updated. Can do something with checking the last update globals. Store the last one here or check when it has changed.
 # Completed the above. Just imported the function in the datafetch file and when new data gets downloaded it makes a new file on the spot. easy...at least for now.
 # Why the hell are dates and times so hard to work with in python holy shit
-
-STATES = set()
-
-get_state = pd.read_csv(
-    'data/primary_average/president_primary_polls_avg.csv', encoding='UTF-8')
-
-for i in get_state.state:
-    STATES.add(i)
+# When 2 people have equal polling, they currently overlap
 
 CANIDATES = ['Amy Klobuchar', 'Bernard Sanders',
              'Pete Buttigieg', 'Elizabeth Warren', 'Michael Bloomberg', 'Joseph R. Biden Jr.']
-
-async def driver():
-    pass
 
 
 async def get_est_time():
@@ -155,16 +145,8 @@ async def primary_avg(state):
     plt.subplots_adjust(bottom=0.2)
     plt.savefig(
         f'graphs/primary_average_state/{state}/{state}_avg-{round(time.time())}.png', bbox_inches='tight', dpi=150)
-    # plt.show()
     plt.close(fig=fig)
 
 if __name__ == "__main__":
-    # for state in STATES:
     asyncio.run(primary_avg('National'))
-    # asyncio.run(primary_avg("Wyoming"))
 
-    # may be useful later "Wyoming"
-
-    # plt.annotate('Test', xy=(mdates.datestr2num(sanders.modeldate.iloc[0]),
-#                          sanders.pct_estimate.iloc[0]), xycoords='data', xytext=(.9, .6), textcoords='figure fraction',
-#                           arrowprops=dict(facecolor='black', arrowstyle='|-|'))
