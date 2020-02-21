@@ -1,7 +1,7 @@
 import feedparser
-import pprint
 import asyncio
 import httpx
+import aiosqlite
 from datetime import datetime
 
 
@@ -16,6 +16,19 @@ async def get_reuters():
     feed_raw_data = r.text
     f = feedparser.parse(feed_raw_data)
     # f.entries[1].pprint
+    db = await aiosqlite.connect('news.db')
+    cursor = await db.cursor()
+    for entry in f.entries:
+        guid = entry.guid
+        title = entry.title
+        # published = need to convert this to est time why is time and date so hard to deal with fuck
+        article_url = entry.link
+        sql = ('SELECT guild_id FROM guilds WHERE guild_id = ?')
+        val = (str(ctx.id),)
+        try:
+            await cursor.execute(sql, val)
+        except aiosqlite.Error as error:
+            print(f"There was an Error: {error}")
     print(f.entries[1]['guid']) 
     print(f.entries[1]['title'])
     print(f.entries[1]['published'])
