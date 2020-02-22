@@ -24,21 +24,21 @@ async def fivethirtyeight_primary_polls_avg():
         async with httpx.AsyncClient() as client:
             r = await client.get(url, headers=headers)
         print(r.status_code, 'avg')
+        print(r.headers)
         if r.status_code == 200:
-            with open('data/primary_average/president_primary_polls_avg.csv', 'wb') as f:
-                f.write(r.content)
+            # with open('data/primary_average/president_primary_polls_avg.csv', 'wb') as f:
+            #     f.write(r.content)
             PRIMARY_POLLS_AVG_LAST_UPDATE = await get_est_time()
-            await asyncio.sleep(10)
-            for state in STATES:
-                await primary_avg(state)
+            # await asyncio.sleep(10)
+            # for state in STATES:
+            #     await primary_avg(state)
         elif r.status_code != 304:
             await primary_polls_avg_webhook()
         headers = {'user-agent': 'Elections 2020 discord bot',
                    'If-None-Match': r.headers['etag']}
-        async with httpx.AsyncClient() as client:
-            r = await client.get(url, headers=headers)
-        print(r.status_code, 'avg')
-        print(PRIMARY_POLLS_AVG_LAST_UPDATE)
+        print(r.headers)
+        # print(r.status_code, 'avg')
+        # print(PRIMARY_POLLS_AVG_LAST_UPDATE)
         await asyncio.sleep(10)
 
 
