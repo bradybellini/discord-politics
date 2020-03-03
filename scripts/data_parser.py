@@ -25,7 +25,6 @@ async def get_est_time():
 
 
 async def primary_avg(state):
-    print(state)
     style.use('ggplot')
 
     polling_avg_data = pd.read_csv(

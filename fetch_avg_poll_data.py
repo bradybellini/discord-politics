@@ -19,7 +19,7 @@ for i in get_state.state:
 
 async def fivethirtyeight_primary_polls_avg():
     url = 'https://projects.fivethirtyeight.com/2020-primary-data/pres_primary_avgs_2020.csv'
-    headers = {'user-agent': 'Elections 2020 discord bot', 'If-None-Match': ""}
+    headers = {'user-agent': 'Elections 2020 Discord bot contact: bbellini@protonmail.com or bradybellini.com/electionsbot/', 'If-None-Match': ""}
     while True:
         async with httpx.AsyncClient() as client:
             r = await client.get(url, headers=headers)
@@ -35,9 +35,9 @@ async def fivethirtyeight_primary_polls_avg():
             await primary_polls_avg_webhook()
         headers = {'user-agent': 'Elections 2020 discord bot',
                    'If-None-Match': r.headers['etag']}
-        # print(r.status_code, 'avg')
-        # print(PRIMARY_POLLS_AVG_LAST_UPDATE)
-        await asyncio.sleep(10)
+        print(r.status_code, 'AVG')
+        print(PRIMARY_POLLS_AVG_LAST_UPDATE)
+        await asyncio.sleep(900)
 
 
 if __name__ == "__main__":
