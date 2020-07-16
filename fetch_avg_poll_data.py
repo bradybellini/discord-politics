@@ -1,20 +1,20 @@
 import httpx
 import asyncio
-import pandas as pd
-from pandas import read_csv
-from scripts.webhook_driver import primary_polls_avg_webhook
-from scripts.data_parser import primary_avg
-from scripts.meta import get_est_time
+# import pandas as pd
+# from pandas import read_csv
+# from scripts.webhook_driver import primary_polls_avg_webhook
+# from scripts.data_parser import primary_avg
+# from scripts.meta import get_est_time
 
 PRIMARY_POLLS_AVG_LAST_UPDATE = None
 
 STATES = set()
 
-get_state = pd.read_csv(
-    'data/primary_average/president_primary_polls_avg.csv', encoding='ANSI')
+# get_state = pd.read_csv(
+#     'data/primary_average/president_primary_polls_avg.csv', encoding='ANSI')
 
-for i in get_state.state:
-    STATES.add(i)
+# for i in get_state.state:
+#     STATES.add(i)
 
 
 async def fivethirtyeight_primary_polls_avg():
@@ -22,22 +22,27 @@ async def fivethirtyeight_primary_polls_avg():
     headers = {'user-agent': 'Elections 2020 Discord bot contact: bbellini@protonmail.com or bradybellini.com/electionsbot/', 'If-None-Match': ""}
     while True:
         async with httpx.AsyncClient() as client:
+            print(client.headers)
             r = await client.get(url, headers=headers)
+        print(r.request.headers)
         print(r.status_code, 'avg')
-        if r.status_code == 200:
-            with open('data/primary_average/president_primary_polls_avg.csv', 'wb') as f:
-                f.write(r.content)
-            PRIMARY_POLLS_AVG_LAST_UPDATE = await get_est_time()
-            await asyncio.sleep(10)
-            for state in STATES:
-                await primary_avg(state)
-        elif r.status_code != 304:
-            await primary_polls_avg_webhook()
+        # print(r.headers)
+        # if r.status_code == 200:
+        #     with open('data/primary_average/president_primary_polls_avg.csv', 'wb') as f:
+        #         f.write(r.content)
+        #     PRIMARY_POLLS_AVG_LAST_UPDATE = await get_est_time()
+        #     await asyncio.sleep(10)
+        #     for state in STATES:
+        #         await primary_avg(state)
+        # elif r.status_code != 304:
+        #     await primary_polls_avg_webhook()
         headers = {'user-agent': 'Elections 2020 discord bot',
                    'If-None-Match': r.headers['etag']}
+        print(r.request.headers)
         print(r.status_code, 'AVG')
-        print(PRIMARY_POLLS_AVG_LAST_UPDATE)
-        await asyncio.sleep(900)
+        # print(r.client)
+        # print(PRIMARY_POLLS_AVG_LAST_UPDATE)
+        await asyncio.sleep(10)
 
 
 if __name__ == "__main__":
