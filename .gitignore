@@ -1,9 +1,10 @@
 # other stuff
-
+keys.py
 apikeys.py
 *.csv
 # apikeys.py
 graphs
+brainstorm.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
